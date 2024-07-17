@@ -18,6 +18,26 @@ USE `tecnodomesticos`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `auditoria_clientes`
+--
+
+DROP TABLE IF EXISTS `auditoria_clientes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `auditoria_clientes` (
+  `idAuditoria` int NOT NULL AUTO_INCREMENT,
+  `idCliente` int NOT NULL,
+  `campo_modificado` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish2_ci NOT NULL,
+  `valor_anterior` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish2_ci DEFAULT NULL,
+  `valor_nuevo` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish2_ci DEFAULT NULL,
+  `fecha_cambio` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`idAuditoria`),
+  KEY `idCliente` (`idCliente`),
+  CONSTRAINT `auditoria_clientes_ibfk_1` FOREIGN KEY (`idCliente`) REFERENCES `cliente` (`idCliente`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish2_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `auditoria_clientes`
 --
 
@@ -28,6 +48,26 @@ INSERT INTO `auditoria_clientes` VALUES (1,128,'nombreCliente','Alexandra','Juan
 UNLOCK TABLES;
 
 --
+-- Table structure for table `ciudad`
+--
+
+DROP TABLE IF EXISTS `ciudad`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `ciudad` (
+  `idCiudad` int NOT NULL AUTO_INCREMENT,
+  `nombreCiudad` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish2_ci NOT NULL,
+  `idDepartamento` int NOT NULL,
+  `latitud` varchar(45) COLLATE utf8mb3_spanish2_ci NOT NULL,
+  `longitud` varchar(45) COLLATE utf8mb3_spanish2_ci NOT NULL,
+  PRIMARY KEY (`idCiudad`),
+  UNIQUE KEY `idCiudad_UNIQUE` (`idCiudad`),
+  KEY `departamento_idx` (`idDepartamento`),
+  CONSTRAINT `departamento` FOREIGN KEY (`idDepartamento`) REFERENCES `departamento` (`idDepartamento`)
+) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish2_ci COMMENT='Tabla para almacenas las ciudades colombianas para las direcciones de envio y facturación';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `ciudad`
 --
 
@@ -36,6 +76,26 @@ LOCK TABLES `ciudad` WRITE;
 INSERT INTO `ciudad` VALUES (1,'Leticia',1,'-4.215','-69.9406'),(2,'Puerto Nariño',1,'-3.7706','-70.3569'),(3,'Medellín',2,'6.2442','-75.5812'),(4,'Bello',2,'6.3373','-75.5575'),(5,'Itagüí',2,'6.1846','-75.5991'),(6,'Envigado',2,'6.1735','-75.5917'),(7,'Apartadó',2,'7.8833','-76.625'),(8,'Turbo',2,'8.0947','-76.7284'),(9,'Rionegro',2,'6.1552','-75.375'),(10,'Caucasia',2,'7.9868','-75.1936'),(11,'Arauca',3,'7.0847','-70.7591'),(12,'Arauquita',3,'7.0281','-71.4283'),(13,'Saravena',3,'6.9511','-71.8806'),(14,'Tame',3,'6.4603','-71.7362'),(15,'Barranquilla',4,'10.9639','-74.7964'),(16,'Soledad',4,'10.9184','-74.7646'),(17,'Malambo',4,'10.859','-74.7739'),(18,'Puerto Colombia',4,'10.9878','-74.9545'),(19,'Galapa',4,'10.896','-74.8834'),(20,'Sabanalarga',4,'10.6295','-74.9221'),(21,'Cartagena',5,'10.391','-75.4794'),(22,'Magangué',5,'9.242','-74.7546'),(23,'Turbaco',5,'10.3295','-75.4111'),(24,'Arjona',5,'10.2508','-75.3436'),(25,'Mompox',5,'9.2417','-74.4269'),(26,'Tunja',6,'5.5353','-73.3678'),(27,'Duitama',6,'5.8269','-73.0342'),(28,'Sogamoso',6,'5.7204','-72.9245'),(29,'Chiquinquirá',6,'5.6181','-73.8188'),(30,'Moniquirá',6,'5.875','-73.572'),(31,'Manizales',7,'5.07','-75.5133'),(32,'Villamaría',7,'5.0447','-75.514'),(33,'Chinchiná',7,'4.9826','-75.6039'),(34,'La Dorada',7,'5.4494','-74.6658'),(35,'Riosucio',7,'5.4215','-75.7028'),(36,'Florencia',8,'1.6153','-75.6062'),(37,'San Vicente del Caguán',8,'2.1131','-74.7756'),(38,'Puerto Rico',8,'1.909','-75.1453'),(39,'El Doncello',8,'1.6781','-75.2806'),(40,'Cartagena del Chairá',8,'1.3343','-74.8447'),(41,'Yopal',9,'5.3471','-72.4066'),(42,'Aguazul',9,'5.1812','-72.5535'),(43,'Villanueva',9,'4.6144','-72.9273'),(44,'Tauramena',9,'4.9041','-72.8334'),(45,'Monterrey',9,'4.957','-72.902'),(46,'Popayán',10,'2.4448','-76.6147'),(47,'Santander de Quilichao',10,'3.0074','-76.4843'),(48,'Puerto Tejada',10,'3.2308','-76.4122'),(49,'Guapi',10,'2.5695','-77.8993'),(50,'Piendamó',10,'2.6412','-76.6402'),(51,'Valledupar',11,'10.4631','-73.2532'),(52,'Aguachica',11,'8.3115','-73.6012'),(53,'Bosconia',11,'9.9747','-73.8908'),(54,'Curumaní',11,'9.1998','-73.5448'),(55,'El Copey',11,'10.1496','-73.9652'),(56,'Quibdó',12,'5.6944','-76.6611'),(57,'Istmina',12,'5.1574','-76.6838'),(58,'Tadó',12,'5.2667','-76.5597'),(59,'Condoto',12,'5.0969','-76.6489'),(60,'Riosucio',12,'5.4074','-76.9499'),(61,'Montería',13,'8.7575','-75.8896'),(62,'Lorica',13,'9.2373','-75.8158'),(63,'Sahagún',13,'8.9463','-75.4424'),(64,'Cereté',13,'8.8844','-75.7911'),(65,'Montelíbano',13,'7.9797','-75.4187'),(66,'Bogotá',14,'4.711','-74.0721'),(67,'Soacha',14,'4.579','-74.2168'),(68,'Girardot',14,'4.3066','-74.8039'),(69,'Facatativá',14,'4.8139','-74.3542'),(70,'Zipaquirá',14,'5.0226','-73.9749'),(71,'Inírida',15,'3.8655','-67.923'),(72,'San José del Guaviare',16,'2.5706','-72.6369'),(73,'Neiva',17,'2.9345','-75.2809'),(74,'Pitalito',17,'1.8532','-76.0491'),(75,'Garzón',17,'2.1957','-75.6312'),(76,'La Plata',17,'2.3933','-75.8916'),(77,'Villavieja',17,'3.2195','-75.2177'),(78,'Riohacha',18,'11.5444','-72.907'),(79,'Maicao',18,'11.3843','-72.242'),(80,'Uribia',18,'11.5265','-72.2653'),(81,'Manaure',18,'11.7757','-72.4449'),(82,'Santa Marta',19,'11.2418','-74.199'),(83,'Ciénaga',19,'11.0079','-74.247'),(84,'Fundación',19,'10.5205','-73.769'),(85,'Aracataca',19,'10.5911','-74.2244'),(86,'El Banco',19,'9.0023','-73.975'),(87,'Villavicencio',20,'4.142','-73.6266'),(88,'Acacías',20,'3.9861','-73.757'),(89,'Granada',20,'3.5369','-73.7063'),(90,'San Martín',20,'3.6965','-73.699'),(91,'Pasto',21,'1.2078','-77.2772'),(92,'Ipiales',21,'0.8303','-77.6494'),(93,'Tumaco',21,'1.7975','-78.7763'),(94,'Túquerres',21,'1.0865','-77.6186'),(95,'Ocaña',22,'8.2361','-73.3578'),(96,'Cúcuta',22,'7.8939','-72.5078'),(97,'Pamplona',22,'7.3772','-72.6526'),(98,'Villa del Rosario',22,'7.8345','-72.4745'),(99,'San Gil',27,'6.5533','-73.1313'),(100,'Barrancabermeja',27,'7.0653','-73.854'),(101,'Bucaramanga',27,'7.1254','-73.1198'),(102,'Floridablanca',27,'7.0622','-73.0905'),(103,'Ciénaga de Oro',13,'8.8761','-75.6259'),(104,'El Carmen de Bolívar',5,'9.7178','-75.1254'),(105,'Tuluá',30,'4.0847','-76.1954'),(106,'Buenaventura',30,'3.8933','-77.0702');
 /*!40000 ALTER TABLE `ciudad` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `cliente`
+--
+
+DROP TABLE IF EXISTS `cliente`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cliente` (
+  `idCliente` int NOT NULL AUTO_INCREMENT,
+  `cedulaCliente` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish2_ci NOT NULL,
+  `nombreCliente` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish2_ci NOT NULL,
+  `apellidoCliente` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish2_ci NOT NULL,
+  `emailCliente` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish2_ci NOT NULL,
+  `telefonoCliente` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish2_ci NOT NULL,
+  `ultimaCompraCliente` datetime DEFAULT NULL,
+  PRIMARY KEY (`idCliente`),
+  UNIQUE KEY `idCliente_UNIQUE` (`idCliente`)
+) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish2_ci COMMENT='Tabla para almacenar los datos necesarios de los clientes para la facturación de las ventas';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `cliente`
@@ -92,6 +152,25 @@ DELIMITER ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
+-- Table structure for table `cupon`
+--
+
+DROP TABLE IF EXISTS `cupon`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cupon` (
+  `idCupon` int NOT NULL AUTO_INCREMENT,
+  `codigoCupon` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish2_ci NOT NULL,
+  `descripcionCupon` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish2_ci NOT NULL,
+  `porcentajeDescuentoCupon` int NOT NULL,
+  `estadoCupon` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish2_ci NOT NULL,
+  PRIMARY KEY (`idCupon`),
+  UNIQUE KEY `idCupon_UNIQUE` (`idCupon`),
+  UNIQUE KEY `descripcionCupon_UNIQUE` (`descripcionCupon`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish2_ci COMMENT='Tabla para almacenar los cupones de descuento que se pueden aplicar en la compra de productos';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `cupon`
 --
 
@@ -100,6 +179,21 @@ LOCK TABLES `cupon` WRITE;
 INSERT INTO `cupon` VALUES (1,'CUPON10','Descuento del 10%',10,'1'),(2,'CUPON15','Descuento del 15%',15,'1'),(3,'CUPON20','Descuento del 20%',20,'1'),(4,'CUPON25','Descuento del 25%',25,'1'),(5,'CUPON30','Descuento del 30%',30,'1'),(6,'CUPON35','Descuento del 35%',35,'1'),(7,'CUPON40','Descuento del 40%',40,'1'),(8,'CUPON45','Descuento del 45%',45,'1'),(9,'CUPON50','Descuento del 50%',50,'1'),(10,'CUPON55','Descuento del 55%',55,'1');
 /*!40000 ALTER TABLE `cupon` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `departamento`
+--
+
+DROP TABLE IF EXISTS `departamento`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `departamento` (
+  `idDepartamento` int NOT NULL AUTO_INCREMENT,
+  `nombreDepartamento` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish2_ci NOT NULL,
+  PRIMARY KEY (`idDepartamento`),
+  UNIQUE KEY `idDepartamento_UNIQUE` (`idDepartamento`)
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish2_ci COMMENT='Tabla para almacenar los departamentos de Colombia para la facturación y envio de los productos comprados';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `departamento`
@@ -112,6 +206,28 @@ INSERT INTO `departamento` VALUES (1,'Amazonas'),(2,'Antioquia'),(3,'Arauca'),(4
 UNLOCK TABLES;
 
 --
+-- Table structure for table `direccion`
+--
+
+DROP TABLE IF EXISTS `direccion`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `direccion` (
+  `idDireccion` int NOT NULL AUTO_INCREMENT,
+  `descripcionDireccion` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish2_ci NOT NULL,
+  `idCiudad` int NOT NULL,
+  `idCliente` int NOT NULL,
+  `estadoDireccion` int NOT NULL,
+  PRIMARY KEY (`idDireccion`),
+  UNIQUE KEY `id_direccion_UNIQUE` (`idDireccion`),
+  KEY `ciudad_idx` (`idCiudad`),
+  KEY `cliente_direccion_idx` (`idCliente`),
+  CONSTRAINT `ciudad_direccion` FOREIGN KEY (`idCiudad`) REFERENCES `ciudad` (`idCiudad`),
+  CONSTRAINT `cliente_direccion` FOREIGN KEY (`idCliente`) REFERENCES `cliente` (`idCliente`)
+) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish2_ci COMMENT='Tabla para almacenar las direcciones de los clientes para la facturación y envio de los productos comprados';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `direccion`
 --
 
@@ -120,6 +236,32 @@ LOCK TABLES `direccion` WRITE;
 INSERT INTO `direccion` VALUES (1,'Calle 81, Cra 10, Casa 173',48,1,1),(2,'Calle 15, Cra 18, Casa 182',47,2,1),(3,'Calle 95, Cra 19, Casa 166',18,3,1),(4,'Calle 25, Cra 5, Casa 51',34,4,1),(5,'Calle 60, Cra 20, Casa 15',23,5,1),(6,'Calle 2, Cra 15, Casa 128',49,6,1),(7,'Calle 95, Cra 17, Casa 48',38,7,1),(8,'Calle 100, Cra 15, Casa 152',28,8,1),(9,'Calle 45, Cra 12, Casa 124',17,9,1),(10,'Calle 76, Cra 17, Casa 166',35,10,1),(11,'Calle 95, Cra 14, Casa 95',19,11,1),(12,'Calle 47, Cra 5, Casa 125',26,12,1),(13,'Calle 64, Cra 14, Casa 95',17,13,1),(14,'Calle 22, Cra 2, Casa 168',45,14,1),(15,'Calle 98, Cra 4, Casa 195',16,15,1),(16,'Calle 69, Cra 10, Casa 53',47,16,1),(17,'Calle 82, Cra 7, Casa 37',47,17,1),(18,'Calle 11, Cra 15, Casa 64',21,18,1),(19,'Calle 10, Cra 6, Casa 9',21,19,1),(20,'Calle 90, Cra 6, Casa 141',34,20,1),(21,'Calle 28, Cra 7, Casa 181',25,21,1),(22,'Calle 70, Cra 1, Casa 21',20,22,1),(23,'Calle 67, Cra 3, Casa 143',8,23,1),(24,'Calle 57, Cra 8, Casa 60',15,24,1),(25,'Calle 54, Cra 17, Casa 110',12,25,1),(26,'Calle 55, Cra 1, Casa 95',16,26,1),(27,'Calle 9, Cra 11, Casa 70',9,27,1),(28,'Calle 81, Cra 11, Casa 51',33,28,1),(29,'Calle 51, Cra 12, Casa 68',49,29,1),(30,'Calle 87, Cra 9, Casa 93',4,30,1),(31,'Calle 99, Cra 15, Casa 112',34,31,1),(32,'Calle 73, Cra 12, Casa 147',46,32,1),(33,'Calle 37, Cra 2, Casa 70',25,33,1),(34,'Calle 36, Cra 7, Casa 119',48,34,1),(35,'Calle 3, Cra 6, Casa 37',8,35,1),(36,'Calle 23, Cra 14, Casa 136',19,36,1),(37,'Calle 84, Cra 1, Casa 141',20,37,1),(38,'Calle 86, Cra 3, Casa 193',25,38,1),(39,'Calle 54, Cra 5, Casa 103',45,39,1),(40,'Calle 90, Cra 17, Casa 67',13,40,1),(41,'Calle 28, Cra 13, Casa 42',12,41,1),(42,'Calle 50, Cra 17, Casa 124',32,42,1),(43,'Calle 28, Cra 11, Casa 144',3,43,1),(44,'Calle 13, Cra 10, Casa 186',13,44,1),(45,'Calle 48, Cra 13, Casa 128',18,45,1),(46,'Calle 85, Cra 4, Casa 83',24,46,1),(47,'Calle 15, Cra 7, Casa 14',22,47,1),(48,'Calle 99, Cra 13, Casa 28',42,48,1),(49,'Calle 71, Cra 2, Casa 41',42,49,1),(50,'Calle 54, Cra 4, Casa 49',37,50,1),(51,'Calle 88, Cra 4, Casa 73',12,51,1),(52,'Calle 3, Cra 10, Casa 44',36,52,1),(53,'Calle 92, Cra 9, Casa 69',23,53,1),(54,'Calle 27, Cra 20, Casa 11',17,54,1),(55,'Calle 55, Cra 14, Casa 170',8,55,1),(56,'Calle 24, Cra 14, Casa 160',45,56,1),(57,'Calle 6, Cra 13, Casa 186',40,57,1),(58,'Calle 12, Cra 5, Casa 172',28,58,1),(59,'Calle 21, Cra 8, Casa 44',50,59,1),(60,'Calle 32, Cra 12, Casa 7',19,60,1),(61,'Calle 77, Cra 15, Casa 47',3,61,1),(62,'Calle 54, Cra 11, Casa 22',46,62,1),(63,'Calle 20, Cra 6, Casa 148',45,63,1),(64,'Calle 26, Cra 12, Casa 28',48,64,1),(65,'Calle 31, Cra 15, Casa 133',9,65,1),(66,'Calle 82, Cra 13, Casa 116',4,66,1),(67,'Calle 62, Cra 18, Casa 87',30,67,1),(68,'Calle 67, Cra 12, Casa 169',25,68,1),(69,'Calle 97, Cra 7, Casa 140',27,69,1),(70,'Calle 59, Cra 7, Casa 161',4,70,1),(71,'Calle 99, Cra 14, Casa 93',14,71,1),(72,'Calle 96, Cra 20, Casa 191',44,72,1),(73,'Calle 49, Cra 17, Casa 142',2,73,1),(74,'Calle 8, Cra 5, Casa 197',10,74,1),(75,'Calle 98, Cra 7, Casa 156',44,75,1),(76,'Calle 1, Cra 9, Casa 6',47,76,1),(77,'Calle 53, Cra 18, Casa 148',6,77,1),(78,'Calle 30, Cra 4, Casa 2',25,78,1),(79,'Calle 45, Cra 15, Casa 79',37,79,1),(80,'Calle 50, Cra 5, Casa 154',5,80,1),(81,'Calle 15, Cra 10, Casa 173',47,81,1),(82,'Calle 5, Cra 10, Casa 28',16,82,1),(83,'Calle 19, Cra 20, Casa 57',25,83,1),(84,'Calle 66, Cra 16, Casa 190',20,84,1),(85,'Calle 13, Cra 9, Casa 159',34,85,1),(86,'Calle 94, Cra 15, Casa 144',24,86,1),(87,'Calle 20, Cra 12, Casa 55',33,87,1),(88,'Calle 42, Cra 3, Casa 90',41,88,1),(89,'Calle 75, Cra 6, Casa 43',9,89,1),(90,'Calle 27, Cra 16, Casa 32',21,90,1),(91,'Calle 59, Cra 14, Casa 140',21,91,1),(92,'Calle 97, Cra 12, Casa 199',12,92,1),(93,'Calle 18, Cra 4, Casa 81',24,93,1),(94,'Calle 12, Cra 4, Casa 108',8,94,1),(95,'Calle 17, Cra 8, Casa 57',17,95,1),(96,'Calle 86, Cra 6, Casa 148',45,96,1),(97,'Calle 29, Cra 15, Casa 158',39,97,1),(98,'Calle 44, Cra 19, Casa 41',16,98,1),(99,'Calle 94, Cra 15, Casa 170',3,99,1),(100,'Calle 73, Cra 10, Casa 34',22,100,1),(101,'Calle 65, Cra 19, Casa 137',33,101,1),(102,'Calle 23, Cra 3, Casa 9',40,102,1),(103,'Calle 83, Cra 16, Casa 71',23,103,1),(104,'Calle 24, Cra 17, Casa 74',20,104,1),(105,'Calle 86, Cra 2, Casa 180',12,105,1),(106,'Calle 42, Cra 9, Casa 162',40,106,1),(107,'Calle 56, Cra 8, Casa 63',19,107,1),(108,'Calle 90, Cra 8, Casa 57',12,108,1),(109,'Calle 29, Cra 15, Casa 159',39,109,1),(110,'Calle 49, Cra 3, Casa 33',22,110,1),(111,'Calle 69, Cra 3, Casa 121',31,111,1),(112,'Calle 23, Cra 7, Casa 183',30,112,1),(113,'Calle 26, Cra 10, Casa 124',34,113,1),(114,'Calle 46, Cra 7, Casa 30',41,114,1),(115,'Calle 64, Cra 15, Casa 160',39,115,1),(116,'Calle 45, Cra 19, Casa 56',31,116,1),(117,'Calle 22, Cra 6, Casa 123',16,117,1),(118,'Calle 68, Cra 10, Casa 69',15,118,1),(119,'Calle 46, Cra 8, Casa 114',34,119,1),(120,'Calle 65, Cra 5, Casa 30',4,120,1),(121,'Calle 96, Cra 12, Casa 186',49,121,1),(122,'Calle 3, Cra 5, Casa 25',45,122,1),(123,'Calle 10, Cra 16, Casa 136',1,123,1),(124,'Calle 100, Cra 20, Casa 161',8,124,1),(125,'Calle 33, Cra 4, Casa 186',5,125,1),(126,'Calle 71, Cra 5, Casa 18',37,126,1),(127,'Calle 34, Cra 11, Casa 117',18,127,1),(128,'Calle 3, Cra 2, Casa 44',47,128,1),(129,'Calle 96, Cra 20, Casa 16',22,129,1),(130,'Calle 95, Cra 9, Casa 45',45,130,1),(131,'Calle 78, Cra 4, Casa 136',40,131,1),(132,'Calle 92, Cra 4, Casa 45',28,132,1),(133,'Calle 7, Cra 14, Casa 54',13,133,1),(134,'Calle 44, Cra 9, Casa 158',35,134,1),(135,'Calle 6, Cra 5, Casa 7',22,135,1),(136,'Calle 9, Cra 3, Casa 79',29,136,1),(137,'Calle 64, Cra 10, Casa 96',48,137,1),(138,'Calle 36, Cra 18, Casa 77',14,138,1),(139,'Calle 16, Cra 20, Casa 95',20,139,1),(140,'Calle 55, Cra 11, Casa 9',32,140,1),(141,'Calle 98, Cra 1, Casa 27',32,141,1),(142,'Calle 71, Cra 14, Casa 60',22,142,1),(143,'Calle 27, Cra 1, Casa 74',37,143,1),(144,'Calle 58, Cra 14, Casa 120',50,144,1),(145,'Calle 19, Cra 19, Casa 10',25,145,1),(146,'Calle 30, Cra 1, Casa 43',50,146,1),(147,'Calle 36, Cra 16, Casa 184',10,147,1),(148,'Calle 21, Cra 9, Casa 113',26,148,1),(149,'Calle 89, Cra 18, Casa 148',3,149,1),(150,'Calle 3, Cra 20, Casa 170',15,150,1),(151,'Calle 89, Cra 12, Casa 51',27,151,1),(152,'Calle 84, Cra 13, Casa 123',10,152,1),(153,'Calle 12, Cra 1, Casa 145',29,153,1),(154,'Calle 70, Cra 15, Casa 120',40,154,1),(155,'Calle 15, Cra 8, Casa 74',38,155,1),(156,'Calle 66, Cra 1, Casa 14',17,156,1),(157,'Calle 43, Cra 3, Casa 87',38,157,1),(158,'Calle 42, Cra 17, Casa 182',4,158,1),(159,'Calle 58, Cra 15, Casa 156',40,159,1),(160,'Calle 60, Cra 13, Casa 70',43,160,1),(161,'Calle 21, Cra 10, Casa 138',3,161,1),(162,'Calle 23, Cra 19, Casa 13',24,162,1),(163,'Calle 20, Cra 11, Casa 31',7,163,1),(164,'Calle 18, Cra 11, Casa 198',22,164,1),(165,'Calle 18, Cra 12, Casa 73',4,165,1),(166,'Calle 32, Cra 7, Casa 144',30,166,1),(167,'Calle 79, Cra 4, Casa 87',35,167,1),(168,'Calle 19, Cra 17, Casa 129',35,168,1),(169,'Calle 53, Cra 11, Casa 27',3,169,1),(170,'Calle 83, Cra 20, Casa 90',15,170,1),(171,'Calle 10, Cra 13, Casa 168',16,171,1),(172,'Calle 3, Cra 5, Casa 4',22,172,1),(173,'Calle 7, Cra 2, Casa 20',16,173,1),(174,'Calle 23, Cra 5, Casa 91',30,174,1),(175,'Calle 59, Cra 4, Casa 22',1,175,1),(176,'Calle 71, Cra 11, Casa 97',43,176,1),(177,'Calle 82, Cra 11, Casa 24',3,177,1),(178,'Calle 94, Cra 10, Casa 138',48,178,1),(179,'Calle 68, Cra 11, Casa 113',14,179,1),(180,'Calle 64, Cra 8, Casa 198',41,180,1),(181,'Calle 8, Cra 19, Casa 94',27,181,1),(182,'Calle 25, Cra 13, Casa 83',9,182,1),(183,'Calle 64, Cra 13, Casa 63',32,183,1),(184,'Calle 24, Cra 6, Casa 123',15,184,1),(185,'Calle 57, Cra 20, Casa 55',19,185,1),(186,'Calle 2, Cra 20, Casa 188',35,186,1),(187,'Calle 64, Cra 2, Casa 118',33,187,1),(188,'Calle 51, Cra 12, Casa 69',50,188,1),(189,'Calle 91, Cra 12, Casa 31',3,189,1),(190,'Calle 76, Cra 14, Casa 11',14,190,1),(191,'Calle 18, Cra 2, Casa 163',44,191,1),(192,'Calle 89, Cra 17, Casa 88',37,192,1),(193,'Calle 34, Cra 11, Casa 103',3,193,1),(194,'Calle 73, Cra 9, Casa 13',49,194,1),(195,'Calle 69, Cra 11, Casa 99',47,195,1),(196,'Calle 19, Cra 3, Casa 13',48,196,1),(197,'Calle 54, Cra 17, Casa 111',14,197,1),(198,'Calle 72, Cra 15, Casa 115',33,198,1),(199,'Calle 50, Cra 11, Casa 31',10,199,1),(200,'Calle 53, Cra 1, Casa 113',37,200,1);
 /*!40000 ALTER TABLE `direccion` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `factura`
+--
+
+DROP TABLE IF EXISTS `factura`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `factura` (
+  `idFactura` int NOT NULL AUTO_INCREMENT,
+  `idCliente` int NOT NULL,
+  `fechaFactura` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish2_ci NOT NULL DEFAULT 'now()',
+  `subTotalFactura` double DEFAULT NULL,
+  `IVAFactura` double DEFAULT NULL,
+  `totalFactura` double DEFAULT NULL,
+  `idMedioDePago` int NOT NULL,
+  `idCupon` int NOT NULL,
+  PRIMARY KEY (`idFactura`),
+  KEY `factura_cliente_idx` (`idCliente`),
+  KEY `factura_medio_de_pago_idx` (`idMedioDePago`),
+  KEY `factura_cupon_idx` (`idCupon`),
+  CONSTRAINT `factura_cliente` FOREIGN KEY (`idCliente`) REFERENCES `cliente` (`idCliente`),
+  CONSTRAINT `factura_cupon` FOREIGN KEY (`idCupon`) REFERENCES `cupon` (`idCupon`),
+  CONSTRAINT `factura_medio_de_pago` FOREIGN KEY (`idMedioDePago`) REFERENCES `medios_de_pago` (`idMedioDePago`)
+) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish2_ci COMMENT='Tabla para almacenar los datos de la facturación de cada venta';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `factura`
@@ -178,6 +320,28 @@ DELIMITER ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
+-- Table structure for table `factura_detalle`
+--
+
+DROP TABLE IF EXISTS `factura_detalle`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `factura_detalle` (
+  `idFacturaDetalle` int NOT NULL AUTO_INCREMENT,
+  `idFactura` int NOT NULL,
+  `idProducto` int NOT NULL,
+  `cantidadProducto` int NOT NULL,
+  `valorTotal` double NOT NULL,
+  PRIMARY KEY (`idFacturaDetalle`),
+  UNIQUE KEY `idFacturaDetalle_UNIQUE` (`idFacturaDetalle`),
+  KEY `factura_detalle_idx` (`idFactura`),
+  KEY `factura_detalle_producto_idx` (`idProducto`),
+  CONSTRAINT `factura_detalle` FOREIGN KEY (`idFactura`) REFERENCES `factura` (`idFactura`),
+  CONSTRAINT `factura_detalle_producto` FOREIGN KEY (`idProducto`) REFERENCES `producto` (`idProducto`)
+) ENGINE=InnoDB AUTO_INCREMENT=556 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish2_ci COMMENT='Tabla para almacenar los detalles de cada factura, como sus productos y cantidades';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `factura_detalle`
 --
 
@@ -188,6 +352,21 @@ INSERT INTO `factura_detalle` VALUES (1,2,1,2,5100000),(2,2,3,1,1275000),(3,2,5,
 UNLOCK TABLES;
 
 --
+-- Table structure for table `medios_de_pago`
+--
+
+DROP TABLE IF EXISTS `medios_de_pago`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `medios_de_pago` (
+  `idMedioDePago` int NOT NULL AUTO_INCREMENT,
+  `nombreMedioDePago` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish2_ci NOT NULL,
+  PRIMARY KEY (`idMedioDePago`),
+  UNIQUE KEY `idMedioDePago_UNIQUE` (`idMedioDePago`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish2_ci COMMENT='Tabla para almacenar los medios de pago disponibles para realizar la compra de productos y el descuento que puede tener';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `medios_de_pago`
 --
 
@@ -196,6 +375,25 @@ LOCK TABLES `medios_de_pago` WRITE;
 INSERT INTO `medios_de_pago` VALUES (1,'Tarjeta de Crédito'),(2,'Tarjeta de Débito'),(3,'Transferencia Bancaria'),(4,'Pago en Efectivo'),(5,'Pago Contra Entrega'),(6,'PayPal'),(7,'Google Pay'),(8,'Apple Pay'),(9,'Bitcoin'),(10,'Ethereum'),(11,'Nequi'),(12,'Daviplata'),(13,'PSE'),(14,'Baloto'),(15,'Efecty'),(16,'Crédito de Tienda'),(17,'Western Union'),(18,'Giros Internacionales'),(19,'Criptomonedas (otras)'),(20,'Gift Card'),(21,'Código QR');
 /*!40000 ALTER TABLE `medios_de_pago` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `producto`
+--
+
+DROP TABLE IF EXISTS `producto`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `producto` (
+  `idProducto` int NOT NULL AUTO_INCREMENT,
+  `nombreProducto` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish2_ci NOT NULL,
+  `idTipoProducto` int NOT NULL,
+  `cantidadProducto` int NOT NULL,
+  `precioProducto` double NOT NULL,
+  PRIMARY KEY (`idProducto`),
+  KEY `tipoProducto_idx` (`idTipoProducto`),
+  CONSTRAINT `tipoProducto` FOREIGN KEY (`idTipoProducto`) REFERENCES `tipo_producto` (`idTipoProducto`)
+) ENGINE=InnoDB AUTO_INCREMENT=135 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish2_ci COMMENT='Tabla para almacenar los productos disponibles para la venta\n';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `producto`
@@ -235,6 +433,21 @@ DELIMITER ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
+-- Table structure for table `tipo_producto`
+--
+
+DROP TABLE IF EXISTS `tipo_producto`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `tipo_producto` (
+  `idTipoProducto` int NOT NULL AUTO_INCREMENT,
+  `nombreTipoProducto` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish2_ci NOT NULL,
+  PRIMARY KEY (`idTipoProducto`),
+  UNIQUE KEY `idTipoProducto_UNIQUE` (`idTipoProducto`)
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish2_ci COMMENT='Tabla para almacenar los tipos de producto para catalogarlos';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `tipo_producto`
 --
 
@@ -243,6 +456,118 @@ LOCK TABLES `tipo_producto` WRITE;
 INSERT INTO `tipo_producto` VALUES (1,'Refrigerador'),(2,'Lavadora'),(3,'Secadora'),(4,'Microondas'),(5,'Horno Eléctrico'),(6,'Horno a Gas'),(7,'Licuadora'),(8,'Batidora'),(9,'Aspiradora'),(10,'Plancha'),(11,'Cafetera'),(12,'Tostadora'),(13,'Sandwichera'),(14,'Freidora'),(15,'Freidora de Aire'),(16,'Extractora de Jugos'),(17,'Procesadora de Alimentos'),(18,'Calentador de Agua'),(19,'Purificador de Agua'),(20,'Ventilador'),(21,'Aire Acondicionado'),(22,'Deshumidificador'),(23,'Humidificador'),(24,'Calefactor'),(25,'Placa de Inducción'),(26,'Placa de Gas'),(27,'Congelador'),(28,'Lavavajillas'),(29,'Exprimidor de Cítricos'),(30,'Máquina de Hielo'),(31,'Hervidor Eléctrico'),(32,'Termo'),(33,'Radiador Eléctrico'),(34,'Horno de Convección'),(35,'Grill Eléctrico'),(36,'Máquina de Coser'),(37,'Cocina de Inducción'),(38,'Cocina de Gas'),(39,'Campana Extractora'),(40,'Estufa Eléctrica'),(41,'Estufa de Gas'),(42,'Deshumidificador de Ropa'),(43,'Lavasecadora'),(44,'Dispensador de Agua'),(45,'Máquina de Palomitas'),(46,'Máquina de Pan'),(47,'Cafetera de Cápsulas'),(48,'Máquina de Café Espresso'),(49,'Cocina Multifunción'),(50,'Robot de Cocina');
 /*!40000 ALTER TABLE `tipo_producto` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Temporary view structure for view `v_clientes_compras`
+--
+
+DROP TABLE IF EXISTS `v_clientes_compras`;
+/*!50001 DROP VIEW IF EXISTS `v_clientes_compras`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `v_clientes_compras` AS SELECT 
+ 1 AS `idCliente`,
+ 1 AS `cedulaCliente`,
+ 1 AS `nombreCliente`,
+ 1 AS `apellidoCliente`,
+ 1 AS `emailCliente`,
+ 1 AS `telefonoCliente`,
+ 1 AS `idFactura`,
+ 1 AS `fechaFactura`,
+ 1 AS `totalFactura`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `v_clientes_direccion_ciudad`
+--
+
+DROP TABLE IF EXISTS `v_clientes_direccion_ciudad`;
+/*!50001 DROP VIEW IF EXISTS `v_clientes_direccion_ciudad`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `v_clientes_direccion_ciudad` AS SELECT 
+ 1 AS `idCliente`,
+ 1 AS `cedulaCliente`,
+ 1 AS `nombreCliente`,
+ 1 AS `apellidoCliente`,
+ 1 AS `emailCliente`,
+ 1 AS `telefonoCliente`,
+ 1 AS `descripcionDireccion`,
+ 1 AS `nombreCiudad`,
+ 1 AS `estadoDireccion`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `v_factura_detalle`
+--
+
+DROP TABLE IF EXISTS `v_factura_detalle`;
+/*!50001 DROP VIEW IF EXISTS `v_factura_detalle`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `v_factura_detalle` AS SELECT 
+ 1 AS `idFactura`,
+ 1 AS `idCliente`,
+ 1 AS `fechaFactura`,
+ 1 AS `idProducto`,
+ 1 AS `nombreProducto`,
+ 1 AS `cantidadProducto`,
+ 1 AS `valorTotal`,
+ 1 AS `subTotalFactura`,
+ 1 AS `IVAFactura`,
+ 1 AS `totalFactura`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `v_facturas_con_cupones`
+--
+
+DROP TABLE IF EXISTS `v_facturas_con_cupones`;
+/*!50001 DROP VIEW IF EXISTS `v_facturas_con_cupones`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `v_facturas_con_cupones` AS SELECT 
+ 1 AS `idFactura`,
+ 1 AS `idCliente`,
+ 1 AS `fechaFactura`,
+ 1 AS `subTotalFactura`,
+ 1 AS `IVAFactura`,
+ 1 AS `totalFactura`,
+ 1 AS `codigoCupon`,
+ 1 AS `descripcionCupon`,
+ 1 AS `porcentajeDescuentoCupon`,
+ 1 AS `estadoCupon`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `v_facturas_por_medio_pago`
+--
+
+DROP TABLE IF EXISTS `v_facturas_por_medio_pago`;
+/*!50001 DROP VIEW IF EXISTS `v_facturas_por_medio_pago`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `v_facturas_por_medio_pago` AS SELECT 
+ 1 AS `idMedioDePago`,
+ 1 AS `nombreMedioDePago`,
+ 1 AS `totalFacturas`,
+ 1 AS `totalIngresos`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `v_productos_mas_vendidos`
+--
+
+DROP TABLE IF EXISTS `v_productos_mas_vendidos`;
+/*!50001 DROP VIEW IF EXISTS `v_productos_mas_vendidos`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `v_productos_mas_vendidos` AS SELECT 
+ 1 AS `idProducto`,
+ 1 AS `nombreProducto`,
+ 1 AS `totalCantidadVendida`,
+ 1 AS `totalValorGenerado`*/;
+SET character_set_client = @saved_cs_client;
 
 --
 -- Dumping events for database 'tecnodomesticos'
@@ -567,6 +892,114 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Final view structure for view `v_clientes_compras`
+--
+
+/*!50001 DROP VIEW IF EXISTS `v_clientes_compras`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_clientes_compras` AS select `c`.`idCliente` AS `idCliente`,`c`.`cedulaCliente` AS `cedulaCliente`,`c`.`nombreCliente` AS `nombreCliente`,`c`.`apellidoCliente` AS `apellidoCliente`,`c`.`emailCliente` AS `emailCliente`,`c`.`telefonoCliente` AS `telefonoCliente`,`f`.`idFactura` AS `idFactura`,`f`.`fechaFactura` AS `fechaFactura`,`f`.`totalFactura` AS `totalFactura` from (`cliente` `c` join `factura` `f` on((`c`.`idCliente` = `f`.`idCliente`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `v_clientes_direccion_ciudad`
+--
+
+/*!50001 DROP VIEW IF EXISTS `v_clientes_direccion_ciudad`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_clientes_direccion_ciudad` AS select `c`.`idCliente` AS `idCliente`,`c`.`cedulaCliente` AS `cedulaCliente`,`c`.`nombreCliente` AS `nombreCliente`,`c`.`apellidoCliente` AS `apellidoCliente`,`c`.`emailCliente` AS `emailCliente`,`c`.`telefonoCliente` AS `telefonoCliente`,`d`.`descripcionDireccion` AS `descripcionDireccion`,`ciu`.`nombreCiudad` AS `nombreCiudad`,`d`.`estadoDireccion` AS `estadoDireccion` from ((`cliente` `c` join `direccion` `d` on((`c`.`idCliente` = `d`.`idCliente`))) join `ciudad` `ciu` on((`d`.`idCiudad` = `ciu`.`idCiudad`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `v_factura_detalle`
+--
+
+/*!50001 DROP VIEW IF EXISTS `v_factura_detalle`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_factura_detalle` AS select `f`.`idFactura` AS `idFactura`,`f`.`idCliente` AS `idCliente`,`f`.`fechaFactura` AS `fechaFactura`,`fd`.`idProducto` AS `idProducto`,`p`.`nombreProducto` AS `nombreProducto`,`fd`.`cantidadProducto` AS `cantidadProducto`,`fd`.`valorTotal` AS `valorTotal`,`f`.`subTotalFactura` AS `subTotalFactura`,`f`.`IVAFactura` AS `IVAFactura`,`f`.`totalFactura` AS `totalFactura` from ((`factura` `f` join `factura_detalle` `fd` on((`f`.`idFactura` = `fd`.`idFactura`))) join `producto` `p` on((`fd`.`idProducto` = `p`.`idProducto`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `v_facturas_con_cupones`
+--
+
+/*!50001 DROP VIEW IF EXISTS `v_facturas_con_cupones`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_facturas_con_cupones` AS select `f`.`idFactura` AS `idFactura`,`f`.`idCliente` AS `idCliente`,`f`.`fechaFactura` AS `fechaFactura`,`f`.`subTotalFactura` AS `subTotalFactura`,`f`.`IVAFactura` AS `IVAFactura`,`f`.`totalFactura` AS `totalFactura`,`cup`.`codigoCupon` AS `codigoCupon`,`cup`.`descripcionCupon` AS `descripcionCupon`,`cup`.`porcentajeDescuentoCupon` AS `porcentajeDescuentoCupon`,`cup`.`estadoCupon` AS `estadoCupon` from (`factura` `f` join `cupon` `cup` on((`f`.`idCupon` = `cup`.`idCupon`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `v_facturas_por_medio_pago`
+--
+
+/*!50001 DROP VIEW IF EXISTS `v_facturas_por_medio_pago`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_facturas_por_medio_pago` AS select `mp`.`idMedioDePago` AS `idMedioDePago`,`mp`.`nombreMedioDePago` AS `nombreMedioDePago`,count(`f`.`idFactura`) AS `totalFacturas`,sum(`f`.`totalFactura`) AS `totalIngresos` from (`factura` `f` join `medios_de_pago` `mp` on((`f`.`idMedioDePago` = `mp`.`idMedioDePago`))) group by `mp`.`idMedioDePago`,`mp`.`nombreMedioDePago` order by `totalFacturas` desc */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `v_productos_mas_vendidos`
+--
+
+/*!50001 DROP VIEW IF EXISTS `v_productos_mas_vendidos`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_productos_mas_vendidos` AS select `p`.`idProducto` AS `idProducto`,`p`.`nombreProducto` AS `nombreProducto`,sum(`fd`.`cantidadProducto`) AS `totalCantidadVendida`,sum(`fd`.`valorTotal`) AS `totalValorGenerado` from (`producto` `p` join `factura_detalle` `fd` on((`p`.`idProducto` = `fd`.`idProducto`))) group by `p`.`idProducto`,`p`.`nombreProducto` order by `totalCantidadVendida` desc */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -577,4 +1010,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-17 18:34:49
+-- Dump completed on 2024-07-17 18:24:24
